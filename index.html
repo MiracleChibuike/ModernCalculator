@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Modern Calculator</title>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Asap+Condensed&family=Cabin+Condensed&family=Dancing+Script&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Jost&family=Kalam&family=Kanit&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Noto+Sans+Display:wght@600&family=Odibee+Sans&family=PT+Sans+Narrow&family=Playwrite+ZA+Guides&family=Sansita+Swashed:wght@300..900&family=Signika+Negative:wght@300..700&family=Slabo+27px&family=Syne:wght@400..800&family=Ubuntu:wght@500&family=Yesteryear&display=swap");
     </style>
@@ -123,6 +123,20 @@
         .display2 input {
             font-size: 1.1rem;
         }
+        .answerDisplayer{
+            /* background: #974646; */
+            position: absolute;
+            /* width: 50%; */
+            margin: 0 510px;
+            left: 0;
+            right: 0;
+            top: 30%;
+            height: 70px;
+            font-size: 1.5rem;
+            text-align: right;
+            padding: 0 20px;
+
+        }
         @media screen and (min-width: 0) and (max-width: 750px) {
             .scientiic{
                 /* overflow-x: scroll; */
@@ -137,10 +151,12 @@
                 overflow-x: scroll;
                 padding: 10px 30px;
             }
-            #calc-body{
-                overflow-x: hidden;
-                display: none;
+            .answerDisplayer{
+              margin: 0 100px;
+                top: 30%;
+                height: 40px;
             }
+         
         }
     </style>
 </head>
@@ -152,6 +168,7 @@
             <div class="display">
                 <input id="display" readonly />
             </div>
+            <div class="answerDisplayer"></div>
             <div class="calculatorButtons" id="calc-btn">
                 <button class="operator-special">C</button>
                 <button class="operator">/</button>
@@ -185,6 +202,7 @@
             <div class="display2">
                 <input id="display2" readonly />
             </div>
+            <div class="answerDisplayer"></div>
             <div class="scientificButtons">
                 <button class="number">INV</button>
                 <button class="number">DEG</button>
@@ -260,12 +278,20 @@
         console.log(allButton);
         let inputDisplay = document.getElementById("display");
         let inputDisplay2 = document.getElementById("display2");
-        inputDisplay.style.fontSize = "2rem";
-        inputDisplay2.style.fontSize = "2rem";
+        // Answer Display;
+        let answerDisplayer = document.querySelector(".scientiic .answerDisplayer");
+        let answerDisplayer2 = document.querySelector(".calculatorBody .answerDisplayer");
+        console.log(answerDisplayer2)
+        console.log(answerDisplayer)
+        inputDisplay.style.fontSize = "1.5rem";
+        inputDisplay2.style.fontSize = "1.5rem";
         inputDisplay.style.textAlign = "right";
         inputDisplay2.style.textAlign = "right";
         inputDisplay.style.padding = "0 20px";
-        inputDisplay2.style.padding = "0 20px"
+        inputDisplay2.style.padding = "0 20px";
+        inputDisplay2.style.paddingBottom = "50px";
+        inputDisplay.style.paddingBottom = "50px";
+        // inputDisplay2.value.style.position = "relative";
         console.log(inputDisplay, inputDisplay2);
 
         // Run a loop to check when each button gets clicked
@@ -295,6 +321,8 @@
             const clearAll = () => {
                 inputDisplay.value = "";
                 inputDisplay2.value = "";
+                answerDisplayer.innerHTML = "";
+                answerDisplayer2.innerHTML = ""
             }
             // Append Value
             const appendValue = (valueButton) => {
@@ -305,9 +333,12 @@
             const runCalculation = () => {
                 let value = inputDisplay.value;
                 let value2 = inputDisplay2.value;
+                let mainDisplay = answerDisplayer;
+                let mainDisplay2 = answerDisplayer2;
                 try {
-                    inputDisplay.value = eval(value);
-                    inputDisplay2.value = eval(value2)
+                    mainDisplay2.innerHTML = eval(value);
+                    mainDisplay.innerHTML = eval(value2);
+
                 } catch (error) {
                     inputDisplay.value = "Invalid Expression";
                     inputDisplay2.value = "Invalid Expression";
