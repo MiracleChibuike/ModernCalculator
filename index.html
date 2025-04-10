@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Asap+Condensed&family=Cabin+Condensed&family=Dancing+Script&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Jost&family=Kalam&family=Kanit&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Noto+Sans+Display:wght@600&family=Odibee+Sans&family=PT+Sans+Narrow&family=Playwrite+ZA+Guides&family=Sansita+Swashed:wght@300..900&family=Signika+Negative:wght@300..700&family=Slabo+27px&family=Syne:wght@400..800&family=Ubuntu:wght@500&family=Yesteryear&display=swap");
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Mulish", "sans-serif";
+            /* overflow-x: scroll; */
+        }
+
+        .parent {
+            display: grid;
+            place-content: center;
+            min-height: 100vh;
+            background: #f2f2f2;
+        }
+
+        .calculatorBody {
+            display: none;
+        }
+
+        .calculatorButtons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            column-gap: 40px;
+            row-gap: 30px;
+            background: #fff;
+            padding: 25px 35px;
+            box-shadow: 0 2.9px 10px #e0dcdc;
+            /* box-shadow: 0 0 5px #020202; */
+        }
+
+        /* .display {
+      } */
+        .display input,
+        .display2 input {
+            height: 20vh;
+            /* background: #ccc; */
+            /* border: 1px solid #ccc; */
+            border: none;
+            /* background: #f6f4f4; */
+            outline: none;
+            width: 100%;
+            box-shadow: 0 2.9px 10px #e0dcdc;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .operator-special {
+            color: #e43d67;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 10px;
+        }
+
+        .operator {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: #74c374;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .operator:focus,
+        .number:focus {
+            transition: .5s ease;
+            background: #f2eeee;
+            box-shadow: 0 0 4px #f2ecec;
+        }
+
+        .operator-equals {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            background: #74c374;
+            padding: 10px;
+            border-radius: 8px;
+            grid-row-start: 4;
+            grid-row-end: 6;
+            grid-column-start: 4;
+        }
+
+        .number {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Scientific Styling */
+        .scientificButtons {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            column-gap: 40px;
+            row-gap: 30px;
+            padding: 25px 15px;
+            background: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .display input,
+        .display2 input {
+            font-size: 1.1rem;
+        }
+        @media screen and (min-width: 0) and (max-width: 750px) {
+            .scientiic{
+                /* overflow-x: scroll; */
+                margin-left: 70px;
+                /* display: none; */
+               
+            }
+            .scientificButtons{
+                 width: 100%;
+            }
+            .parent{
+                overflow-x: scroll;
+                padding: 10px 30px;
+            }
+            #calc-body{
+                overflow-x: hidden;
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="calculatorBody" id="calc-body">
+            <h2>Normal Calculator</h2>
+            <div class="display">
+                <input id="display" readonly />
+            </div>
+            <div class="calculatorButtons" id="calc-btn">
+                <button class="operator-special">C</button>
+                <button class="operator">/</button>
+                <button class="operator">X</button>
+
+                <button class="operator">*</button>
+
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="number">9</button>
+                <button class="operator">-</button>
+
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="operator">+</button>
+
+                <button class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="operator-equals">=</button>
+
+                <button class="operator"><i class="fa-solid fa-rotate" id="show"></i></button>
+                <button class="number">0</button>
+                <button class="number">.</button>
+            </div>
+        </div>
+        <!-- Scientific Calculator -->
+        <div class="scientiic">
+            <h2>Scientific Calculator</h2>
+            <div class="display2">
+                <input id="display2" readonly />
+            </div>
+            <div class="scientificButtons">
+                <button class="number">INV</button>
+                <button class="number">DEG</button>
+                <button class="number">x!</button>
+                <button class="operator-special">C</button>
+                <button class="operator">%</button>
+                <button class="operator">*</button>
+                <button class="operator">/</button>
+                <button class="number">sin</button>
+                <button class="number">cos</button>
+                <button class="number">tan</button>
+                <button class="number">7</button>
+                <button class="number">8</button>
+                <button class="number">9</button>
+                <button class="operator" id="cancel1">X</button>
+                <button class="number">In</button>
+                <button class="number">log</button>
+                <button class="number">xy</button>
+                <button class="number">4</button>
+                <button class="number">5</button>
+                <button class="number">6</button>
+                <button class="operator">-</button>
+                <button class="number">Pi</button>
+                <button class="number">e</button>
+                <!-- <button class="number">sin</button> -->
+                <button class="number"><i class="fa-solid fa-square-root-variable"></i></button>
+                <button class="number">1</button>
+                <button class="number">2</button>
+                <button class="number">3</button>
+                <button class="operator">+</button>
+                <button class="operator"><i class="fa-solid fa-rotate" id="rotate"></i></button>
+                <button class="number">( )</button>
+                <button class="number">x2</button>
+                <button class="number">00</button>
+                <button class="number">0</button>
+                <button class="number">.</button>
+                <button class="operator">=</button>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        let calc, normalcalc;
+
+        calc = document.querySelector(".calculatorBody");
+
+        normalcalc = document.querySelector(".scientiic");
+        let displayInp = document.querySelector(".display2");
+        let displayCalcNom = document.querySelector(".display")
+        const rotate = document.getElementById("rotate");
+
+        const rotateCalculator = () => {
+            console.log(calc, normalcalc)
+            normalcalc.style.display = "none";
+            calc.style.display = "block";
+            displayInp.style.display = "none"
+        };
+
+        const rotateCalculator2 = () => {
+            console.log(calc, normalcalc)
+            normalcalc.style.display = "block";
+            calc.style.display = "none";
+            displayInp.style.display = "block"
+        };
+
+        let display2 = document.getElementById("show");
+        display2.addEventListener("click", rotateCalculator2)
+        rotate.addEventListener("click", rotateCalculator);
+
+        // Perform calculation
+        // store all buttons in a container
+        let allButton = document.querySelectorAll(".calculatorButtons button,  .scientificButtons button");
+        console.log(allButton);
+        let inputDisplay = document.getElementById("display");
+        let inputDisplay2 = document.getElementById("display2");
+        inputDisplay.style.fontSize = "2rem";
+        inputDisplay2.style.fontSize = "2rem";
+        inputDisplay.style.textAlign = "right";
+        inputDisplay2.style.textAlign = "right";
+        inputDisplay.style.padding = "0 20px";
+        inputDisplay2.style.padding = "0 20px"
+        console.log(inputDisplay, inputDisplay2);
+
+        // Run a loop to check when each button gets clicked
+        for (let i = 0; i < allButton.length; i++) {
+            allButton[i].addEventListener("click", () => {
+                const valueButton = allButton[i].textContent;
+                // alert(`Button clicked: ${valueButton}`)
+                if (valueButton === "C") {
+                    // Return a function
+                    clearAll()
+                } else if (valueButton === "=") {
+                    runCalculation();
+                    // Return a function to run calculation
+                } else if (valueButton === "Pi") {
+                    checkPi();
+                }
+                else if (valueButton === "X") {
+                    clearLeft()
+                }
+                else {
+                    appendValue(valueButton)
+                    // Return a function to ppend values
+                }
+            });
+
+            //    Clear all inputs
+            const clearAll = () => {
+                inputDisplay.value = "";
+                inputDisplay2.value = "";
+            }
+            // Append Value
+            const appendValue = (valueButton) => {
+                inputDisplay.value += valueButton;
+                inputDisplay2.value += valueButton;
+            }
+            // Run calculation
+            const runCalculation = () => {
+                let value = inputDisplay.value;
+                let value2 = inputDisplay2.value;
+                try {
+                    inputDisplay.value = eval(value);
+                    inputDisplay2.value = eval(value2)
+                } catch (error) {
+                    inputDisplay.value = "Invalid Expression";
+                    inputDisplay2.value = "Invalid Expression";
+                    inputDisplay.style.color = "red";
+                    inputDisplay2.style.color = "red";
+                    inputDisplay.style.transition = "0.5s ease";
+                    inputDisplay2.style.transition = "0.5s ease";
+                    setTimeout(() => {
+                        inputDisplay.value = "";
+                        inputDisplay2.value = "";
+                        inputDisplay.style.color = "#000";
+                        inputDisplay2.style.color = "#000"
+                    }, 3000)
+                }
+            };
+
+            // Clear one by one from left
+            const clearLeft = () => {
+                inputDisplay.value = inputDisplay.value.slice(0, -1);
+                inputDisplay2.value = inputDisplay2.value.slice(0, -1)
+            };
+
+            const checkPi = () => {
+                inputDisplay.value = Math.PI;
+                inputDisplay2.value = Math.PI;
+            }
+
+        };
+
+
+
+    </script>
+</body>
+
+<script src="https://kit.fontawesome.com/9b5c4c6b23.js" crossorigin="anonymous"></script>
+
+</html>
